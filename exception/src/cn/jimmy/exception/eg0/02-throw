@@ -1,0 +1,196 @@
+-------------------------------------------------------------------
+1. throw
+-------------------------------------------------------------------
+Throwable objects are instances of any subclass of the Throwable class.
+--------------------
+throw someThrowableObject;
+-------------------------------------------------------------------
+2. chained Exception
+-------------------------------------------------------------------
+Throwable getCause()
+Throwable initCause(Throwable)
+Throwable(String, Throwable)
+Throwable(Throwable)
+-----------------------------
+try {
+
+} catch (IOException e) {
+    throw new SampleException("Other IOException", e);
+}
+-------------------------------------------------------------------
+  @Override
+  public void init(Configuration conf) {
+    super.init(conf);
+    this.conf = conf;
+    try {
+      localResources = loadLocalResources();
+    } catch (IOException e) {
+      LOG.error("exception when load local resources", e);
+      throw new HamsterException(e);
+    }        
+    proxyMgr = new ContainerManagementProtocolProxy(conf);
+    LOG.info("init succeed");
+  }
+--------------------------------------- 
+static Map<String, LocalResource> loadLocalResources() throws IOException {
+    Map<String, LocalResource> resources = new HashMap<String, LocalResource>();
+    
+    File file = new File(HamsterConfig.DEFAULT_LOCALRESOURCE_SERIALIZED_FILENAME);
+    if ((!file.exists()) || (file.isDirectory())) {
+      throw new IOException("cannot find a proper file for PB, fil should exist:" + file.getAbsolutePath());
+    }
+}
+---------------------------------------
+public class HamsterException extends RuntimeException {
+  private static final long serialVersionUID = -4497338225113444073L;
+
+  public HamsterException(String message) {
+    super(message);
+  }
+  
+  public HamsterException(Throwable t) {
+    super(t);
+  }
+
+}
+---------------------------------------
+public class HamsterCliParseException extends HamsterException {
+  
+  private static final long serialVersionUID = 3053552899116302974L;
+  
+  public HamsterCliParseException(Throwable t) {
+    super(t);
+  }
+  
+  public HamsterCliParseException(String message) {
+    super(message);
+  }
+
+}
+-------------------------------------------------------------------
+
+public Object pop() {
+    Object obj;
+
+    if (size == 0) {
+        throw new EmptyStackException();
+    }
+
+    obj = objectAt(size - 1);
+    setObjectAt(size - 1, null);
+    size--;
+    return obj;
+}
+------------------
+Note that the declaration of the pop method does not contain a throws clause. 
+EmptyStackException is not a checked exception, so pop is not required 
+to state that it might occur.
+-------------------------------------------------------------------
+void run(String[] args) throws InterruptedException, IOException {
+    // get jobid, vpid
+    String jobId = args[0];
+    String vpId = args[1];
+    
+    if (jobId == null || jobId.isEmpty() || vpId == null || vpId.isEmpty()) {
+      System.err.println("jobid, vpid cannot be empty or null");
+      throw new IOException("jobid, vpid cannot be empty or null");
+    }
+    
+    // get real arguments need to be executed
+    String[] execArgs = new String[args.length - 2];
+    for (int i = 2; i < args.length; i++) {
+      execArgs[i - 2] = args[i];
+    }
+    
+    // try to launch process
+    Process proc;
+    try {
+      proc = Runtime.getRuntime().exec(execArgs, copyEnvs(appendHadoopJarsToClasspath()));
+    } catch (IOException e) {
+      System.err.println("launch process [" + vpId + "] failed.");
+      createPidFile(jobId, vpId, true);
+      throw e;
+    }
+    
+    // create pidFile
+    String pidFile = createPidFile(jobId, vpId, false);
+    
+    // get err stream and out stream
+    BufferedReader bre = new BufferedReader(new InputStreamReader(
+        proc.getErrorStream()));
+    BufferedReader bri = new BufferedReader(new InputStreamReader(
+        proc.getInputStream()));
+
+    // use thread fetch output
+    Thread errThread = new Thread(new StreamGobbler(bre, false));
+    Thread outThread = new Thread(new StreamGobbler(bri, true));
+    
+    errThread.start();
+    outThread.start();
+    
+    // wait for thread die
+    errThread.join();
+    outThread.join();
+    
+    bri.close();
+    bre.close();
+    
+    // get exit code and write it to pid file
+    int exitCode = proc.waitFor();
+    FileOutputStream os = new FileOutputStream(pidFile);
+    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os));
+    writer.write(String.valueOf(exitCode));
+    writer.close();
+    
+    // use same exit code 
+    System.exit(exitCode);
+  }
+----------------
+  String createPidFile(String jobId, String vpId, boolean failed) throws IOException {
+    // get pid root
+    File pidRoot = getPidRoot(jobId);
+    
+    // see if dir created
+    if ((null != pidRoot) && pidRoot.exists() && pidRoot.isDirectory()) {
+      File pidFile;
+      if (failed) {
+        pidFile = new File(pidRoot, vpId + "_err");
+      } else {
+        pidFile = new File(pidRoot, vpId);
+      }
+      
+      // clean pidFile if it exists
+      if (pidFile.exists()) {
+        pidFile.delete();
+      }
+      
+      boolean flag = pidFile.createNewFile();
+      if (!flag) {
+        throw new IOException("create pidfile failed, path:" + pidFile.getAbsolutePath());
+      }
+      
+      return pidFile.getAbsolutePath();
+    } else {
+      throw new IOException("get father directory for pid file failed, path:" + pidRoot);
+    }
+  }
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------

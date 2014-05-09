@@ -1,0 +1,111 @@
+-------------------------------------------------------------------
+1. Three Kinds of Exceptions
+-------------------------------------------------------------------
+1.1 checked exception: a)
+---------------------------
+a) most of subclass which implements Throwable
+Exception extends Throwable
+---------------------------
+All exceptions are checked exceptions (e.g, java.io.FileNotFoundException), 
+except for those indicated by Error, RuntimeException, and their subclasses.
+---------------------------
+1.2 unchecked exceptions: b) and c)
+---------------------------
+b) error
+Error extends Throwable
+---------------------------
+When a dynamic linking failure or other hard failure in the JVM occurs, 
+the virtual machine throws an Error. 
+Simple programs typically do not catch or throw Errors.
+---------------------------
+These are exceptional conditions that are external to the application, 
+and that the application usually cannot anticipate or recover from.
+e.g., The unsuccessful read will throw java.io.IOError because of 
+hardware or system malfunction. 
+An application might choose to catch this exception, in order to notify 
+the user of the problem — but it also might make sense for the program 
+to print a stack trace and exit.
+Errors are not subject to the Catch or Specify Requirement. 
+Errors are those exceptions indicated by *Error* and its subclasses.
+---------------------------
+c) runtime exception
+RuntimeException extends Exception
+Exception extends Throwable
+---------------------------
+One Exception subclass, RuntimeException, is reserved for exceptions that 
+indicate incorrect use of an API. 
+
+An example of a runtime exception is NullPointerException, which occurs 
+when a method tries to access a member of an object through a null reference. 
+
+most applications shouldn't throw runtime exceptions or subclass RuntimeException.
+---------------------------
+These are exceptional conditions that are internal to the application, 
+and that the application usually cannot anticipate or recover from.
+
+If a logic error causes a null to be passed to the constructor, 
+the constructor will throw *NullPointerException*
+
+The application can catch this exception, but it probably makes more 
+sense to eliminate the bug that caused the exception to occur.
+
+Runtime exceptions are not subject to the Catch or Specify Requirement. 
+Runtime exceptions are those indicated by *RuntimeException* and its subclasses.
+-------------------------------------------------------------------
+2. catch
+-------------------------------------------------------------------
+Each catch block is an exception handler and handles the type of 
+exception indicated by its argument. 
+
+Exception handlers can do more than just print error messages or 
+halt the program. They can do error recovery, prompt the user to 
+make a decision, or propagate the error up to a higher-level handler 
+using chained exceptions
+----------------------
+try {
+
+} catch (FileNotFoundException e) {
+    System.err.println("FileNotFoundException: " + e.getMessage());
+    throw new SampleException(e);
+
+} catch (IOException e) {
+    System.err.println("Caught IOException: " + e.getMessage());
+}
+-----------------------
+catch (IOException|SQLException ex) {
+    logger.log(ex);
+    throw ex;
+}
+-------------------------------------------------------------------
+3. finally
+-------------------------------------------------------------------
+The finally block always executes when the try block exits. 
+-----------------
+Note: If the JVM exits while the try or catch code is being executed, 
+then the finally block may not execute. Likewise, if the thread executing 
+the try or catch code is interrupted or killed, the finally block may 
+not execute even though the application as a whole continues.
+-----------------
+Putting cleanup code in a finally block is always a good practice, 
+even when no exceptions are anticipated.
+------------------
+Important: The finally block is a key tool for preventing resource leaks. 
+When closing a file or otherwise recovering resources, place the code in 
+a finally block to ensure that resource is always recovered.
+
+If you are using Java SE 7 or later, consider using the try-with-resources 
+statement in these situations, which automatically releases system 
+resources when no longer needed.
+-------------------------------------------------------------------
+4. try-with-resources
+-------------------------------------------------------------------
+The try-with-resources statement is a try statement that declares one 
+or more resources. A resource is an object that must be closed after 
+the program is finished with it.
+
+Any object that implements java.lang.AutoCloseable, which includes 
+all objects which implement java.io.Closeable, can be used as a resource. 
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------
+-------------------------------------------------------------------
