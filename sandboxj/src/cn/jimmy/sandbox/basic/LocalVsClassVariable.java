@@ -1,4 +1,4 @@
-package cn.jimmy.javautil.basic;
+package cn.jimmy.sandbox.basic;
 
 import java.io.File;
 
@@ -20,6 +20,7 @@ public class LocalVsClassVariable {
 //    System.out.println(l_file);
     System.out.println(m_flag);
 //    System.out.println(l_flag);
+    
   }
   
   public static void main(String[] args) {

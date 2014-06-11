@@ -1,4 +1,4 @@
-package cn.jimmy.javautil.cool;
+package cn.jimmy.sandbox.util;
 
 
 import java.io.File;
@@ -36,7 +36,7 @@ class Book implements Serializable {
   }  
 }
 
-public class Serialize {
+public class SerializeEgg {
   public static void main(String[] args) {
     File file = new File("book.in");
     file.deleteOnExit();

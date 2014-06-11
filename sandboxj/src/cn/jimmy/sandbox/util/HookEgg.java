@@ -1,4 +1,4 @@
-package cn.jimmy.javautil.cool;
+package cn.jimmy.sandbox.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,8 +8,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Iterator;
 
 class Student implements Serializable{
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
+  
   private String name;
   private int id;
   
@@ -36,11 +42,11 @@ class Student implements Serializable{
   
   
 }
-public class Hook {
+public class HookEgg {
   public static void main(String[] args) {
     Student st1 = new Student("std", 123);
     Student st2 = null;
-    
+
     final ObjectOutputStream oos;
     final ObjectInputStream ois;
     try {
@@ -48,6 +54,7 @@ public class Hook {
       oos.writeObject(st1);
       oos.flush();
       
+
       ois = new ObjectInputStream(new FileInputStream("stu.bin"));
       try {
         st2 = (Student)ois.readObject();
