@@ -1,4 +1,4 @@
-package cn.jimmy.sandbox.sys;
+package cn.jimmy.sandbox.sys.time;
 
 public class SystemTime {
   public static void main(String[] args) throws InterruptedException {

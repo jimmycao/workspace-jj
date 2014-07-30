@@ -1,4 +1,4 @@
-package cn.jimmy.sandbox.sys;
+package cn.jimmy.sandbox.hadoop;
 
 import java.io.File;
 
