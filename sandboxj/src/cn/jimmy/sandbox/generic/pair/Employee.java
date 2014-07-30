@@ -1,4 +1,4 @@
-package cn.jimmy.sandbox.generic;
+package cn.jimmy.sandbox.generic.pair;
 
 import java.util.Date;
 import java.util.GregorianCalendar;

@@ -1,4 +1,4 @@
-package cn.jimmy.sandbox.generic;
+package cn.jimmy.sandbox.generic.pair;
 
 public class Manager extends Employee {
   private double bonus;

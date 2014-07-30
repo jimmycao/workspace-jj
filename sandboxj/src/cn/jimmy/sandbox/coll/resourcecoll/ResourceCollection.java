@@ -10,6 +10,11 @@ public class ResourceCollection<Resource> implements Iterable<Resource> {
   @Override
   public Iterator<Resource> iterator() {
     final Iterator<Resource> iter = resources.iterator();
+    //if:
+    //1) return an interface
+    //2) only need to implement it once
+    //then:
+    //just implement it in internal
     return new Iterator<Resource>() {
 
       @Override
