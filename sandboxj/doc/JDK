@@ -1,0 +1,55 @@
+***Download JDK Source Code For Mac OS X
+
+The JDK source code is packaged in a src.jar, and should be in the JDK/Home folder. However, some JDK versions in Mac OSX didn’t include the source code or Javadoc.
+
+Try find it :
+
+sudo find / -name src.jar
+If you couldn’t find the src.jar, then get it from Apple developer website.
+
+1. Download from Apple Developer
+Go https://developer.apple.com/downloads/index.action , sign in with your Apple ID.
+
+Download the “Java for OS X 2013-0* Developer Package“, it contains JDK runtime, source code and Javadoc, install the downloaded *.dmg and follow the wizard guide to finish the installation.
+
+2. Find JDK Source Code
+After the installation, the JDK source code should be found in following location :
+
+/Library/Java/JavaVirtualMachines/jdk_version.jdk/Contents/Home/src.jar
+ 
+##example
+/Library/Java/JavaVirtualMachines/1.6.0_43-b01-447.jdk/Contents/Home/src.jar
+Note
+Alternatively, you can download the JDK source from the Oracle JDK website.
+
+
+***How To Set $JAVA_HOME Environment Variable On Mac OS X
+1. Mac OSX 10.5 or later
+In Mac OSX 10.5 or later, Apple recommends to set the $JAVA_HOME variable to /usr/libexec/java_home, just export $JAVA_HOME in file ~/. bash_profile or ~/.profile.
+
+$ vim .bash_profile 
+ 
+export JAVA_HOME=$(/usr/libexec/java_home)
+ 
+$ source .bash_profile
+ 
+$ echo $JAVA_HOME
+/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home
+
+Why /usr/libexec/java_home?
+This java_home can return the Java version specified in Java Preferences for the current user. For examples,
+
+/usr/libexec/java_home -V
+Matching Java Virtual Machines (3):
+    1.7.0_05, x86_64:	"Java SE 7"	/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home
+    1.6.0_41-b02-445, x86_64:	"Java SE 6"	/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+    1.6.0_41-b02-445, i386:	"Java SE 6"	/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+This Mac OSX has three JDK installed.
+
+##return top Java version
+$ /usr/libexec/java_home
+/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home
+ 
+## I want Java version 1.6
+$ /usr/libexec/java_home -v 1.6
+/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
