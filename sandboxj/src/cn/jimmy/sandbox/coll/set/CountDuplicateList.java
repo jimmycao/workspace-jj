@@ -18,12 +18,16 @@ public class CountDuplicateList {
 		list.add("ccc");
 		list.add("aaa");
 		list.add("bbb");
+		
 		//1. Collections.frequency
-		Set<String> strSet = new HashSet<String>(list);  //to remove duplicated 
-		System.out.println("strSet.size() = "+strSet.size());
+		Set<String> strSet = new HashSet<String>(list);  //list to set, remove duplicated 
+		System.out.println("strSet.size() : "+strSet.size());
 		for (String str : strSet) {
 			System.out.println(str + ":" + Collections.frequency(list, str));
 		}
+		
+		System.out.println("--------------------");
+		
 		//2. HashMap Note: here 'Integer count, count == null' !!!!
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		for (String str : list) {
@@ -34,6 +38,9 @@ public class CountDuplicateList {
 		Set<Entry<String, Integer>> entrySet = map.entrySet();
 		for (Entry<String, Integer> entry : entrySet)
 			System.out.println(entry.getKey() + ":" + entry.getValue());
+		
+		System.out.println("--------------------");
+		
 		//3. TreeMap
 		Map<String, Integer> map2 = new TreeMap<String, Integer>(map);
 		Set<Entry<String, Integer>> s = map2.entrySet();

@@ -1,9 +1,9 @@
-package cn.jimmy.sandbox.basic.array;
+package cn.jimmy.sandbox.coll.impl;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class arrays {
+public class CompImpl {
 	public static void main(String[] args) {
 		String[] strArray1 = new String[10];
 		String[] strArray2 = new String[10];

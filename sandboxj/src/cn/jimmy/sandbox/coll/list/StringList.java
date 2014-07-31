@@ -1,4 +1,4 @@
-package cn.jimmy.sandbox.coll.set;
+package cn.jimmy.sandbox.coll.list;
 
 import java.util.ArrayList;
 import java.util.Iterator;

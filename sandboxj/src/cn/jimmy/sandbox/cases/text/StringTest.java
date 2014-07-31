@@ -1,4 +1,4 @@
-package cn.jimmy.sandbox.real.text;
+package cn.jimmy.sandbox.cases.text;
 
 public class StringTest {
 

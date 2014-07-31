@@ -1,4 +1,4 @@
-package cn.jimmy.sandbox.coll.resourcecoll;
+package cn.jimmy.sandbox.coll.impl.rescoll;
 
 public class Resource {
   private int mem;

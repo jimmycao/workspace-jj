@@ -1,4 +1,4 @@
-package cn.jimmy.sandbox.basic;
+package cn.jimmy.sandbox.basic.enumm;
 
 public class EnumTest {
 	private enum WeekDay {

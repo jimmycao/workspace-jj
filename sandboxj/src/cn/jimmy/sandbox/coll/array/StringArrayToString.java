@@ -1,4 +1,4 @@
-package cn.jimmy.sandbox.coll.set;
+package cn.jimmy.sandbox.coll.array;
 
 import java.util.Arrays;
 import org.apache.commons.lang.StringUtils;

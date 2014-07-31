@@ -1,4 +1,4 @@
-package cn.jimmy.sandbox.real;
+package cn.jimmy.sandbox.cases;
 
 
 public class HostNameListParser {

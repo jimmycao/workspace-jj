@@ -1,4 +1,4 @@
-package cn.jimmy.sandbox.coll.set;
+package cn.jimmy.sandbox.coll.map;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,15 +30,15 @@ public class HostToContainerList {
   
   public void test() {
     List<Container> cList1 = new ArrayList<Container>();
-    cList1.add(new Container(0, 128, 1));
-    cList1.add(new Container(1, 256, 2));
-    cList1.add(new Container(2, 512, 3));
+    cList1.add(new Container(0, 128f, 1));
+    cList1.add(new Container(1, 256f, 2));
+    cList1.add(new Container(2, 512f, 3));
     hostToContainerList.put("node1", cList1);
 
     List<Container> cList2 = new ArrayList<Container>();
-    cList2.add(new Container(20, 128, 1));
-    cList2.add(new Container(21, 256, 2));
-    cList2.add(new Container(22, 512, 3));
+    cList2.add(new Container(20, 128f, 1));
+    cList2.add(new Container(21, 256f, 2));
+    cList2.add(new Container(22, 512f, 3));
     hostToContainerList.put("node2", cList2);
 
     for (Entry<String, List<Container>> entry : hostToContainerList.entrySet()) {
