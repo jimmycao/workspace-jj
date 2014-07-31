@@ -1,0 +1,12 @@
+gdb vpid_exitcode
+start (run)
+s (step)
+n (next)
+info thread
+x filename
+p filename (print)
+bt
+break
+condition 1
+end
+quit

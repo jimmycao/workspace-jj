@@ -1,4 +1,4 @@
-package cn.jimmy.sandbox.hadoop;
+package cn.jimmy.hadoop.common;
 
 import java.io.File;
 
@@ -10,12 +10,7 @@ public class EnvEG {
     StringBuilder classPathEnv = new StringBuilder(Environment.CLASSPATH.$())
     .append(File.pathSeparatorChar).append("./*");
     
-    
     System.out.println(classPathEnv.toString());
     System.out.println(Environment.JAVA_HOME.$());
-    
-    
-
   }
-
 }
